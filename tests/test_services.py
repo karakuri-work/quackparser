@@ -17,7 +17,7 @@ def make_service(converter=None) -> DocumentService:
 
 
 def test_convert_content_passes_bytes() -> None:
-    """The converter is given a DocumentStream wrapping the raw bytes."""
+    """Verifies raw bytes are wrapped in a DocumentStream and passed correctly."""
     payload = b"<html><body>Hi</body></html>"
     converter = MagicMock()
     fake_result = MagicMock()

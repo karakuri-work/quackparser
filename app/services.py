@@ -11,8 +11,8 @@ from docling_core.types.io import DocumentStream
 class DocumentService:
     """Encapsulates document conversion using Docling.
 
-    Accepts raw document bytes and returns the parsed Markdown,
-    without any reliance on the filesystem.
+    Accepts raw document bytes and returns the parsed Markdown
+    without interacting with the filesystem.
     """
 
     def __init__(self, converter: DocumentConverter) -> None:

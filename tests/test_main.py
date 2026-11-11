@@ -26,7 +26,7 @@ def client_and_mock() -> Generator[tuple[TestClient, MagicMock], None, None]:
 
 
 def test_convert_success(client_and_mock: tuple[TestClient, MagicMock]) -> None:
-    """A multipart file payload yields success with Markdown."""
+    """Successful conversion returns Markdown content from a multipart file."""
     client, _ = client_and_mock
     resp = client.post(
         "/convert",
@@ -40,7 +40,7 @@ def test_convert_success(client_and_mock: tuple[TestClient, MagicMock]) -> None:
 
 
 def test_convert_missing_fields(client_and_mock: tuple[TestClient, MagicMock]) -> None:
-    """Missing required fields raise a validation error (422)."""
+    """Missing required fields result in a validation error (422)."""
     client, _ = client_and_mock
     resp = client.post("/convert", files={})
     assert resp.status_code == 422
