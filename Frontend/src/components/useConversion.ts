@@ -1,5 +1,7 @@
 import { ref } from "vue";
-import type { Ref } from "vue";
+import MarkdownIt from "markdown-it";
+import DOMPurify from "dompurify";
+import "github-markdown-css/github-markdown-dark.css";
 
 interface ConvertResponse {
   success: boolean;
@@ -9,12 +11,14 @@ interface ConvertResponse {
 
 export function useConversion() {
   const markdownContent = ref("Markdown output will appear here.");
-  const isLoading = ref(false);
-
-  const API_URL = "http://127.0.0.1:8000/convert";
-
   const handleFileUpload = async (file: File | File[]) => {
-    isLoading.value = true;
+    const API_URL = "http://localhost:8000/convert";
+    const markdownIt = new MarkdownIt({
+      html: false,
+      linkify: false,
+      breaks: true,
+    });
+
     markdownContent.value = "Processing your file...";
 
     try {
@@ -39,17 +43,17 @@ export function useConversion() {
         return;
       }
 
-      markdownContent.value = data.markdown || "";
+      const rawHtml = markdownIt.render(data.markdown || "");
+      const sanitizeHtml = DOMPurify.sanitize(rawHtml);
+
+      markdownContent.value = sanitizeHtml;
     } catch (error) {
       markdownContent.value = `Error: ${(error as Error).message}`;
-    } finally {
-      isLoading.value = false;
     }
   };
 
   return {
     markdownContent,
-    isLoading,
     handleFileUpload,
   };
 }

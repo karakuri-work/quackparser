@@ -15,9 +15,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-text class="overflow-auto" style="height: 400px">
-            <div>
-              <pre>{{ markdownContent }}</pre>
-            </div>
+            <div class="markdown-body" v-html="markdownContent"></div>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions class="pa-4">
@@ -37,5 +35,5 @@
 
 <script lang="ts" setup>
 import { useConversion } from "../components/useConversion";
-const { markdownContent, isLoading, handleFileUpload } = useConversion();
+const { markdownContent, handleFileUpload } = useConversion();
 </script>
