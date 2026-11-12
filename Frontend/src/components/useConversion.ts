@@ -12,7 +12,7 @@ interface ConvertResponse {
 export function useConversion() {
   const markdownContent = ref("Markdown output will appear here.");
   const handleFileUpload = async (file: File | File[]) => {
-    const API_URL = "http://localhost:8000/convert";
+    const API_URL = "http://localhost:8000/api/v1/convert";
     const markdownIt = new MarkdownIt({
       html: false,
       linkify: false,

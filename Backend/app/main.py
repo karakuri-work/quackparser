@@ -7,6 +7,7 @@ from pathlib import Path
 from fastapi import Depends, FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.schemas import ConvertResponse
 from app.services import DocumentService
@@ -32,16 +33,6 @@ app.add_middleware(
 )
 
 
-@app.get(
-    "/",
-    response_class=HTMLResponse,
-    summary="Web UI",
-    description="Returns a Web UI (HTML) for the browser.",
-)
-async def read_index() -> FileResponse:
-    return FileResponse(STATIC_DIR / "index.html")
-
-
 def get_document_service() -> DocumentService:
     """Provide a document service wired to Docling."""
     from docling.document_converter import DocumentConverter
@@ -50,7 +41,7 @@ def get_document_service() -> DocumentService:
 
 
 @app.post(
-    "/convert",
+    "/api/v1/convert",
     response_model=ConvertResponse,
     summary="Convert document to Markdown",
     description=(
@@ -112,3 +103,6 @@ async def convert(
         return ConvertResponse(success=True, markdown=markdown)
     except Exception as exc:
         return ConvertResponse(success=False, error=str(exc))
+
+
+app.mount("/", StaticFiles(directory=STATIC_DIR, html=True))
