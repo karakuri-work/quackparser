@@ -4,30 +4,38 @@
       <v-col cols="12">
         <v-card>
           <v-card-text>
-            <v-file-upload
-              density="compact"
-              variant="compact"
+            <v-file-input
+              variant="outlined"
+              label="Select File"
+              prepend-icon="mdi-file-document-outline"
               accept=".pdf,.docx,.pptx,.xlsx,.png,.jpg"
-              title="Select File"
-            >
-            </v-file-upload>
-
-            <v-sheet
-              class="border rounded-lg pa-4"
-              height="400"
-              overflow="auto"
-            >
-              <div>Markdown output will appear here.</div>
-            </v-sheet>
-
-            <div class="d-flex justify-end">
-              <v-btn color="primary">Copy to Clipboard</v-btn>
+              hide-details
+              @update:model-value="handleFileUpload"
+            ></v-file-input>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-text class="overflow-auto" style="height: 400px">
+            <div>
+              <pre>{{ markdownContent }}</pre>
             </div>
           </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions class="pa-4">
+            <v-spacer></v-spacer>
+            <v-btn
+              color="primary"
+              variant="elevated"
+              prepend-icon="mdi-content-copy"
+              >Copy to Clipboard</v-btn
+            >
+          </v-card-actions>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useConversion } from "../components/useConversion";
+const { markdownContent, isLoading, handleFileUpload } = useConversion();
+</script>
