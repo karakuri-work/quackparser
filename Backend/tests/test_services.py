@@ -10,14 +10,12 @@ from app.services import DocumentService, DocumentStream
 
 
 def make_service(converter=None) -> DocumentService:
-    """Build a service, optionally with a mocked converter."""
     if converter is None:
         converter = MagicMock()
     return DocumentService(converter)
 
 
 def test_convert_content_passes_bytes() -> None:
-    """Verifies raw bytes are wrapped in a DocumentStream and passed correctly."""
     payload = b"<html><body>Hi</body></html>"
     converter = MagicMock()
     fake_result = MagicMock()
@@ -35,7 +33,6 @@ def test_convert_content_passes_bytes() -> None:
 
 
 def test_convert_content_propagates_errors() -> None:
-    """A converter failure surfaces as an exception to the caller."""
     converter = MagicMock()
     converter.convert.side_effect = RuntimeError("boom")
     service = make_service(converter)

@@ -6,7 +6,6 @@ from pathlib import Path
 
 from fastapi import Depends, FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.schemas import ConvertResponse
@@ -34,7 +33,6 @@ app.add_middleware(
 
 
 def get_document_service() -> DocumentService:
-    """Provide a document service wired to Docling."""
     from docling.document_converter import DocumentConverter
 
     return DocumentService(DocumentConverter())
@@ -57,30 +55,24 @@ def get_document_service() -> DocumentService:
                 " otherwise, returns `success: false` with an error message."
             ),
             "content": {
-                "example": {
-                    "success": True,
-                    "markdown": "# Title\n\nConverted text...",
-                    "error": None,
+                "application/json": {
+                    "examples": {
+                        "success": {
+                            "value": {
+                                "success": True,
+                                "markdown": "# Markdown ...",
+                                "error": None,
+                            },
+                        },
+                        "failure": {
+                            "value": {
+                                "success": False,
+                                "markdown": None,
+                                "error": "Conversion failed: ...",
+                            },
+                        },
+                    }
                 },
-                "example2": {
-                    "success": False,
-                    "markdown": None,
-                    "error": "Conversion failed: ...",
-                },
-            },
-        },
-        422: {
-            "description": "The file upload is missing or invalid.",
-            "content": {
-                "example": {
-                    "detail": [
-                        {
-                            "loc": ["body", "file"],
-                            "msg": "Field required",
-                            "type": "value_error.missing",
-                        }
-                    ]
-                }
             },
         },
     },
@@ -92,7 +84,6 @@ async def convert(
     ),
     service: DocumentService = Depends(get_document_service),
 ) -> ConvertResponse:
-    """Convert uploaded document bytes to Markdown."""
     try:
         content = await file.read()
     except Exception as exc:

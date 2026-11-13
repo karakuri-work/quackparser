@@ -1,12 +1,20 @@
-"""Pydantic models for request/response validation."""
-
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ConvertResponse(BaseModel):
-    """Result of a conversion request."""
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {
+                    "success": True,
+                    "markdown": "# Markdown",
+                    "error": None,
+                }
+            ]
+        }
+    )
 
     success: bool = Field(
         ...,
