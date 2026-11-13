@@ -96,4 +96,9 @@ async def convert(
         return ConvertResponse(success=False, error=str(exc))
 
 
+@app.get("/health")
+def health_check():
+    return {"stauts": "ok"}
+
+
 app.mount("/", StaticFiles(directory=STATIC_DIR, html=True))
