@@ -1,36 +1,21 @@
 from __future__ import annotations
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, Field
 
 
-class ConvertResponse(BaseModel):
-    model_config = ConfigDict(
-        json_schema_extra={
-            "examples": [
-                {
-                    "success": True,
-                    "markdown": "# Markdown",
-                    "error": None,
-                }
-            ]
-        }
+class HealthResponse(BaseModel):
+    status: str = Field(
+        examples=["ok"],
     )
 
-    success: bool = Field(
-        ...,
-        description=(
-            "Conversion success flag. When `false`, the failure reason "
-            "is included in `error`."
-        ),
+
+class ConvertSuccessResponse(BaseModel):
+    markdown: str = Field(
+        examples=["# Markdown\n\n## Conversion"],
     )
-    markdown: str | None = Field(
-        default=None,
-        description=(
-            "The converted Markdown content. Returns the text on success,"
-            " otherwise null."
-        ),
-    )
-    error: str | None = Field(
-        default=None,
-        description="Error message. Contains the message when `success` is `false`.",
+
+
+class ConvertErrorResponse(BaseModel):
+    error: str = Field(
+        examples=["Error Message."],
     )
