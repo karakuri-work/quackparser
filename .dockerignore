@@ -1,0 +1,11 @@
+# Git
+.git/
+
+# Node.js
+Frontend/node_modules/
+Frontend/dist/
+
+# Python
+Backend/.venv
+Backend/.pytest_cache/
+Backend/.ruff_cache/

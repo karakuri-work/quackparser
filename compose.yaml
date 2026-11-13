@@ -1,0 +1,28 @@
+services:
+  app:
+    image: quackparser
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: quackparser
+    ports:
+      - "8000:8000"
+    networks:
+      - quackparser-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  quackparser-network:
+    name: quackparser
+    driver: bridge
