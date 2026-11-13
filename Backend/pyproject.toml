@@ -3,16 +3,26 @@ name = "quackparser"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.11,<3.14"
+requires-python = ">=3.14,<3.15"
 dependencies = [
     "docling>=2.150.0",
     "fastapi[standard]>=0.162.3",
+    "torch",
+    "torchvision",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=9.2.0",
     "ruff>=0.17.4",
+]
+
+[tool.uv]
+override-dependencies = [
+    "opencv-python; sys_platform == 'never'",
+]
+environments = [
+    "sys_platform == 'linux'",
 ]
 
 [tool.uv.sources]
