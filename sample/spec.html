@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>System Specification Template</title>
+    <style>
+      @page {
+        size: A4;
+        margin: 15mm;
+      }
+      body {
+        font-family: sans-serif;
+        color: #1f2937;
+        line-height: 1.45;
+        font-size: 9.5pt;
+        margin: 0;
+      }
+      .header {
+        border-bottom: 2px solid #2563eb;
+        padding-bottom: 10px;
+        margin-bottom: 14px;
+      }
+      h1 {
+        font-size: 18pt;
+        margin: 4px 0;
+      }
+      .columns {
+        column-count: 2;
+        column-gap: 20px;
+      }
+      h2 {
+        font-size: 11pt;
+        color: #1d4ed8;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 3px;
+        margin-top: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 8px 0;
+        font-size: 8.5pt;
+      }
+      th,
+      td {
+        border: 1px solid #d1d5db;
+        padding: 5px 6px;
+        text-align: left;
+      }
+      th {
+        background-color: #f3f4f6;
+      }
+      pre {
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 7px;
+        font-size: 8pt;
+        overflow-x: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>System Architecture &amp; API Specification</h1>
+      <p>Document-to-Markdown Conversion Service Template</p>
+    </div>
+    <div class="columns">
+      <h2>1. System Overview</h2>
+      <p>Sample specification layout designed for A4 single-page output.</p>
+      <h2>2. API Endpoints</h2>
+      <table>
+        <tr>
+          <th>Method</th>
+          <th>Endpoint</th>
+        </tr>
+        <tr>
+          <td>GET</td>
+          <td>/health</td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>/api/convert</td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

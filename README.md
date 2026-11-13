@@ -18,6 +18,12 @@ By decomposing large objectives into granular tasks and layering precise instruc
 
 QuackParser is a full-stack API service that leverages the advanced **Docling** library to convert uploaded documents into high-quality **Markdown** format. It features a modern **Vuetify** frontend for a seamless user experience.
 
+## 📸 Demo
+
+![QuackParser Demo UI](sample/spec.png)
+
+> **Try it yourself:** Download the sample specification PDF used in this screenshot: [sample/spec.pdf](sample/spec.pdf)
+
 ## 🌟 Features
 
 - **Docling Integration**: Uses state-of-the-art document parsing technology to accurately convert complex layouts into clean, structured Markdown.
