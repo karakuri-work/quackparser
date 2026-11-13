@@ -63,8 +63,11 @@
               color="primary"
               variant="elevated"
               prepend-icon="mdi-content-copy"
-              >Copy to Clipboard</v-btn
+              :disabled="status !== 'success'"
+              @click="handleCopy"
             >
+              {{ isCopied ? "Copied" : "Copy to Clipboard" }}
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -74,6 +77,13 @@
 
 <script lang="ts" setup>
 import { useConversion } from "../components/useConversion";
-const { status, markdownContent, errorMessage, handleFileUpload } =
-  useConversion();
+const {
+  status,
+  errorMessage,
+  markdownContent,
+  rawMarkdown,
+  isCopied,
+  handleFileUpload,
+  handleCopy,
+} = useConversion();
 </script>

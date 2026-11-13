@@ -20,9 +20,11 @@ interface ConvertResponse {
 }
 
 export function useConversion() {
-  const markdownContent = ref("Markdown output will appear here.");
   const status = ref<ConversionStatus>("idle");
+  const markdownContent = ref("");
+  const rawMarkdown = ref("");
   const errorMessage = ref<string | null>(null);
+  const isCopied = ref(false);
 
   const handleFileUpload = async (file: File | File[]) => {
     status.value = "processing";
@@ -52,19 +54,33 @@ export function useConversion() {
         return;
       }
 
-      const rawHtml = md.render(data.markdown || "");
-      markdownContent.value = DOMPurify.sanitize(rawHtml);
       status.value = "success";
+      rawMarkdown.value = data.markdown || "";
+      const rawHtml = md.render(rawMarkdown.value);
+      markdownContent.value = DOMPurify.sanitize(rawHtml);
     } catch (error) {
       status.value = "error";
       errorMessage.value = (error as Error).message;
     }
   };
 
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(rawMarkdown.value);
+      isCopied.value = true;
+      setTimeout(() => {
+        isCopied.value = false;
+      }, 2000);
+    } catch (error) {}
+  };
+
   return {
     status,
-    markdownContent,
     errorMessage,
+    markdownContent,
+    rawMarkdown,
+    isCopied,
     handleFileUpload,
+    handleCopy,
   };
 }
